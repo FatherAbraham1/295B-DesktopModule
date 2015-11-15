@@ -3,9 +3,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
+
 
 
 public class Main {
+
+	private static final RealMatrix COVARIANCE = null;
 
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
@@ -27,6 +32,8 @@ public class Main {
         exclude.add(588);
         exclude.add(585);
         exclude.add(580);
+        exclude.add(591);
+        exclude.add(592);
         
         String excludeColumns= InputProcessor.excludeColumns(exclude, metadata);
         
@@ -71,6 +78,37 @@ if(args.length!=0){
 		}
 		else if(algorithmType.equalsIgnoreCase("JavaKMeans")){
 				SparkLib.JavaKMeans(filepath, 2, 2, 2);
+		}
+		else if (algorithmType.equalsIgnoreCase("PCA"))
+		{	
+			System.out.println("pca selected");
+			
+			/**
+		     * Performs principal component analysis on the data in the specified matrix.  Each 
+		     * row of the matrix is considered to be a complete data sample or record.  The number of columns
+		     * (row length) of the data is the number of measurements in each sample.
+		     * 
+		     * @param data - a matrix containing the data.
+		     * @param covType - determines whether the eigenvalue decomposition is performed on the
+		     *   covariance matrix or the correlation matrix.  Allowed values are <tt>CovarianceType.COVARIANCE</tt>
+		     *   or <tt>CovarianceType.CORRELATION</tt>.
+		     * @param level - a threshold in the interval (0 - 1] used to determine how much to reduce the
+		     *   dimensionality of the data matrix.  The higher the threshold, the more the dimensionality is
+		     *   reduced.  
+		     */
+
+		    int mPCAIndices = -1;
+		    double mLevel=0;
+			
+			InputProcessor.convertTo2dArray("data/SECOM.csv");
+		
+		    
+			//PcaAlgorithm(RealMatrix data, CovarianceType covType, int indices)
+			//PcaAlgorithm  pca = new PcaAlgorithm(matrix);
+			
+			//PcaAlgorithm(RealMatrix data, CovarianceType covType, double level)
+			
+			
 		}
 		else {
 			System.out.println("Error: "+algorithmType+ ". No such Algorithm in the library!");

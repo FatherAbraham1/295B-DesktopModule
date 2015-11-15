@@ -1,9 +1,12 @@
 
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,9 +17,10 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
-
+import org.apache.commons.math3.linear.RealMatrix;
 public class InputProcessor {
 
 	public static String fileType(String filepath) throws IOException {
@@ -151,6 +155,51 @@ public class InputProcessor {
         
         br.close();
         return true;
+		
+	}
+	
+	
+	public static void convertTo2dArray(String filePath) throws IOException{
+		FileReader in = null; double[][] matrixData = null;
+		BufferedReader br = null;
+		
+		String line = null;
+		try {
+	         in = new FileReader(filePath);
+	         br = new BufferedReader(in);
+	         
+		int lineCount = 0;
+		line = br.readLine();
+		while ((line = br.readLine()) != null)
+		{
+		    String[] numbers = line.split(",");
+		    
+		    for ( int i = 0 ; i < numbers.length ; i++) {
+		    	if (numbers[i].equals(" ") || numbers[i].equals(null))
+		    		matrixData[lineCount][i] =0;
+		    	//else
+		        // matrixData[lineCount][i] = Double.parseDouble(numbers[i]);
+		    	System.out.println(numbers[i]); }
+
+		    lineCount++;
+		}
+		
+		} catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		finally {
+	         if (in != null) {
+	            in.close();
+	         }
+	       
+		}
+		
+		//Real
+		//Matrix realMatrix = MatrixUtils.createRealMatrix(matrixData);
+		
+		//return realMatrix;
+		
 		
 	}
 	
